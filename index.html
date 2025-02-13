@@ -53,24 +53,46 @@
             font-family: 'Dancing Script', cursive;
         }
         .countdown-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
             position: absolute;
             top: 10px;
             right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        .countdown-tile {
+        .countdown-box {
             background: rgba(0, 0, 0, 0.6);
             color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .flip-clock {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .flip-tile {
+            background: white;
+            color: black;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            min-width: 50px;
+        }
+        .label {
+            font-size: 0.8rem;
+            color: #ddd;
         }
         .carousel-container {
             position: absolute;
-	    top: calc(10% + 50px); 
+	    top: calc(15% + 50px); 
             bottom: 10px;
             right: 10px;
             width: 300px;
@@ -150,9 +172,24 @@
 <body>
     <div class="header-logo" onclick="location.href='poem.html'">♥</div>
     <div class="countdown-container">
-        <div class="countdown-tile" id="anniversary">Anniversary: <span></span></div>
-        <div class="countdown-tile" id="birthday">Birthday: <span></span></div>
+        <div class="countdown-box">
+            <div>Anniversary Countdown</div>
+            <div class="flip-clock" id="anniversary">
+                <div><div class="flip-tile" id="ann-days"></div><div class="label">Days</div></div>
+                <div><div class="flip-tile" id="ann-hours"></div><div class="label">Hours</div></div>
+                <div><div class="flip-tile" id="ann-mins"></div><div class="label">Minutes</div></div>
+            </div>
+        </div>
+        <div class="countdown-box">
+            <div>Birthday Countdown</div>
+            <div class="flip-clock" id="birthday">
+                <div><div class="flip-tile" id="bday-days"></div><div class="label">Days</div></div>
+                <div><div class="flip-tile" id="bday-hours"></div><div class="label">Hours</div></div>
+                <div><div class="flip-tile" id="bday-mins"></div><div class="label">Minutes</div></div>
+            </div>
+        </div>
     </div>
+
     <div class="container">
         <div class="text-content">
             <h1>Our Little Corner</h1>
@@ -185,15 +222,28 @@
             };
         }
 
-        function updateCountdown(targetId, targetDate) {
+
+        function updateCountdown(targetId, dateArray) {
             let now = new Date();
-            let target = new Date(now.getFullYear(), targetDate[0] - 1, targetDate[1]);
-            if (now > target) target = new Date(now.getFullYear() + 1, targetDate[0] - 1, targetDate[1]);
-            let diff = Math.floor((target - now) / (1000 * 60 * 60 * 24));
-            document.getElementById(targetId).querySelector("span").innerText = diff + " days";
+            let target = new Date(now.getFullYear(), dateArray[0] - 1, dateArray[1]);
+            if (now > target) target = new Date(now.getFullYear() + 1, dateArray[0] - 1, dateArray[1]);
+            let diff = target - now;
+            
+            let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById(targetId + '-days').innerText = days;
+            document.getElementById(targetId + '-hours').innerText = hours;
+            document.getElementById(targetId + '-mins').innerText = minutes;
         }
-        updateCountdown("anniversary", [4, 11]);
-        updateCountdown("birthday", [6, 27]);
+        
+        function updateAllCountdowns() {
+            updateCountdown("ann", [4, 11]);
+            updateCountdown("bday", [6, 27]);
+        }
+        setInterval(updateAllCountdowns, 1000);
+        updateAllCountdowns();
     </script>
     <img class="cutout-image" src="cutout.jpg" alt="Cutout Image">
 </body>
