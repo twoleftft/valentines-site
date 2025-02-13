@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Little Corner</title>
+    <style>
+        body {
+            background: url('your-image-cutout.png') no-repeat center top / cover, #ffb6c1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            width: 90%;
+            position: relative;
+        }
+        .text-content {
+            flex: 1;
+            max-width: 50%;
+            text-align: left;
+        }
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace;
+            color: black;
+        }
+        .text-content h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.1;
+            color: white;
+            text-shadow: 0px 3px 3px black;
+            font-family: 'Georgia', serif;
+        }
+        .text-content p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-family: 'Dancing Script', cursive;
+        }
+        .countdown-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .countdown-tile {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .carousel-container {
+            position: absolute;
+	    top: calc(10% + 50px); 
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            height: auto;
+            max-height: calc(100vh - 100px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .carousel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: scrollImages 10s linear infinite;
+        }
+        .carousel img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes scrollImages {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(0); }
+        }
+        .cutout-image {
+            position: absolute;
+            top: 150px;
+            right: 350px;
+            width: 300px;
+            height: auto;
+            z-index: 1;
+        }
+        .message-box {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 120px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .star-cluster {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .star {
+            width: 20px;
+            height: 20px;
+            background: black;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 1.5s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-logo" onclick="location.href='poem.html'">♥</div>
+    <div class="countdown-container">
+        <div class="countdown-tile" id="anniversary">Anniversary: <span></span></div>
+        <div class="countdown-tile" id="birthday">Birthday: <span></span></div>
+    </div>
+    <div class="container">
+        <div class="text-content">
+            <h1>Our Little Corner</h1>
+            <p>This is my attempt at making something in this world just for us. A little corner of the internet, cut out and made ours—one that will grow with time. A space where I can share with you what it’s like to have you in my life.</p>
+	</div>
+    </div>
+    <div class="message-box" onclick="editMessage()">
+        <span id="message-display">Click to leave a message...</span>
+        <input id="message-input" type="text" style="display: none;">
+    </div>
+    <div class="carousel-container">
+        <div class="carousel">
+            <img src="image1.jpg" alt="Image 1">
+            <img src="image2.jpg" alt="Image 2">
+            <img src="image3.jpg" alt="Image 3">
+        </div>
+    </div>
+    <script>
+        function editMessage() {
+            let display = document.getElementById("message-display");
+            let input = document.getElementById("message-input");
+            display.style.display = "none";
+            input.style.display = "block";
+            input.value = display.innerText;
+            input.focus();
+            input.onblur = function() {
+                display.innerText = input.value;
+                input.style.display = "none";
+                display.style.display = "block";
+            };
+        }
+
+        function updateCountdown(targetId, targetDate) {
+            let now = new Date();
+            let target = new Date(now.getFullYear(), targetDate[0] - 1, targetDate[1]);
+            if (now > target) target = new Date(now.getFullYear() + 1, targetDate[0] - 1, targetDate[1]);
+            let diff = Math.floor((target - now) / (1000 * 60 * 60 * 24));
+            document.getElementById(targetId).querySelector("span").innerText = diff + " days";
+        }
+        updateCountdown("anniversary", [4, 11]);
+        updateCountdown("birthday", [6, 27]);
+    </script>
+    <img class="cutout-image" src="image.jpg" alt="Cutout Image">
+</body>
+</html>
