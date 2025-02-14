@@ -16,6 +16,58 @@
             height: 100vh;
             position: relative;
         }
+	.balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+            animation: floatUp 20s linear infinite;
+        }
+
+        /* Balloon String */
+        .balloon::after {
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background: black;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti Styling */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: red;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
         .container {
             display: flex;
             align-items: center;
@@ -266,7 +318,7 @@
 	function loadCarouselImages() {
             let carousel = document.getElementById("carousel");
             let imageFolder = "images/"; // Change to your image directory
-            let imageCount = 10; // Number of images you have
+            let imageCount = 11; // Number of images you have
 
             for (let i = 1; i <= imageCount; i++) {
                 let img = document.createElement("img");
@@ -277,6 +329,45 @@
     	}
 
     	document.addEventListener("DOMContentLoaded", loadCarouselImages);
+	
+	function createBalloons() {
+        for (let i = 0; i < 10; i++) {
+            let balloon = document.createElement("div");
+            balloon.className = "balloon";
+            balloon.style.backgroundColor = getRandomColor();
+            balloon.style.left = Math.random() * window.innerWidth + "px";
+            balloon.style.animationDuration = (7 + Math.random() * 3) + "s";
+            document.body.appendChild(balloon);
+
+            setTimeout(() => balloon.remove(), 7700);
+            }
+    	}
+
+    	// Function to create confetti
+    	function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+            	let confetti = document.createElement("div");
+                confetti.className = "confetti";
+            	confetti.style.left = Math.random() * window.innerWidth + "px";
+            	confetti.style.backgroundColor = getRandomColor();
+            	confetti.style.animationDuration = (7 + Math.random() * 3) + "s";
+            	confetti.style.width = confetti.style.height = (2 + Math.random() * 10) + "px";
+            	document.body.appendChild(confetti);
+
+            	setTimeout(() => confetti.remove(), 5000);
+            }
+    	}
+
+    // Random Color Generator
+    	function getRandomColor() {
+            return `hsl(${Math.random() * 360}, 100%, 50%)`;
+    	}
+
+    	// Run effects on page load
+    	window.onload = function () {
+            createBalloons();
+            createConfetti();
+    	};
     </script>
 </body>
 </html>
