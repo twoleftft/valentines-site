@@ -88,16 +88,18 @@
             background: rgba(255, 255, 255, 0.4);
         }
 	.home-button {
-    	    position: absolute;
+    	    position: fixed;
     	    top: 20px;
     	    left: 20px;
-    	    padding: 10px 15px;
-    	    font-size: 18px;
+    	    background: rgba(255, 255, 255, 0.2);
     	    color: white;
-    	    background: rgba(255, 255, 255, 0.25);
-    	    border-radius: 8px;
     	    text-decoration: none;
-    	    transition: background 0.3s ease, transform 0.2s ease;
+    	    font-size: 18px;
+    	    font-weight: bold;
+    	    padding: 10px 15px;
+    	    border-radius: 10px;
+    	    transition: background 0.3s ease-in-out;
+    	    z-index: 100;
 	}
 
 	.home-button:hover {
@@ -111,12 +113,12 @@
 </head>
 <body>
     <div class="stars" id="stars"></div>
-    <a href="index.html" class="home-button">Home</a>
+    <a href="index.html" class="home-button">🏠 Home</a>
     <div class="container">
         <h1><span class="cursive-title">For My Love ❤️</span></h1>
         <p>This page holds the memory of the most important day of my life - the day you became my forever.</p>
         <audio controls autoplay>
-            <source src="your-song-url-here.mp3" type="audio/mpeg">
+            <source src="music.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
         <div class="poem-container">
