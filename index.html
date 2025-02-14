@@ -110,7 +110,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            animation: scrollImages 17s linear infinite;
+            animation: scrollImages 80s linear infinite;
         }
         .carousel img {
             width: 100%;
@@ -221,10 +221,8 @@
     </div>
     <img class="cutout-image" src="cutout.png" alt="Cutout Image">
     <div class="carousel-container">
-        <div class="carousel">
-            <img src="image1.jpg" alt="Image 1">
-            <img src="image2.jpg" alt="Image 2">
-            <img src="image3.jpg" alt="Image 3">
+        <div class="carousel" id="carousel">
+
         </div>
     </div>
     <script>
@@ -264,6 +262,21 @@
         }
         setInterval(updateAllCountdowns, 1000);
         updateAllCountdowns();
+	
+	function loadCarouselImages() {
+            let carousel = document.getElementById("carousel");
+            let imageFolder = "images/"; // Change to your image directory
+            let imageCount = 10; // Number of images you have
+
+            for (let i = 1; i <= imageCount; i++) {
+                let img = document.createElement("img");
+                img.src = `image${i}.jpg`; // Adjust naming convention if needed
+                img.alt = `Image ${i}`;
+                carousel.appendChild(img);
+            }
+    	}
+
+    	document.addEventListener("DOMContentLoaded", loadCarouselImages);
     </script>
 </body>
 </html>
